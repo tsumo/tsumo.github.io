@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/mobx-crash-course/precache-manifest.7bfb833fae7264347ac802c32715de25.js"
+  "/mobx-crash-course/precache-manifest.f4952191e1dbeb0e4cfb1d16f250316f.js"
 );
 
 self.addEventListener('message', (event) => {

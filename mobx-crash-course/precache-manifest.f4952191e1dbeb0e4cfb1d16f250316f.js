@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "83d62b14b70cc8d642589123bb0b0d83",
+    "revision": "80caebbcb371115a125a4558e218c1a9",
     "url": "/mobx-crash-course/index.html"
   },
   {
@@ -8,12 +8,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/mobx-crash-course/static/css/main.f92e4e2e.chunk.css"
   },
   {
-    "revision": "5c0bf534d0b5ca5c02d3",
-    "url": "/mobx-crash-course/static/js/2.0956a328.chunk.js"
+    "revision": "9ac5cf18cb99f18b3f92",
+    "url": "/mobx-crash-course/static/js/2.6db9d8a1.chunk.js"
   },
   {
     "revision": "69acc368311a28b74c256d4aa3e0e0ae",
-    "url": "/mobx-crash-course/static/js/2.0956a328.chunk.js.LICENSE"
+    "url": "/mobx-crash-course/static/js/2.6db9d8a1.chunk.js.LICENSE"
   },
   {
     "revision": "a6072fca31816806724f",
