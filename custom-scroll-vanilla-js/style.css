@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  background-color: darkseagreen;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.content {
+  position: fixed;
+}
+
+p {
+  font-size: 20px;
+  margin: 0;
+  padding: 5px 20px 5px 10px;
+}
+
+a {
+  color: darkgreen;
+}
+
+.info {
+  position: fixed;
+  right: 10px;
+  background-color: darkolivegreen;
+  width: 350px;
+}
+
+.scroll {
+  right: 0;
+  position: fixed;
+  background-color: darkgreen;
+  width: 10px;
+}
