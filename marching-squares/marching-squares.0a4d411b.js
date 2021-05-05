@@ -9,4 +9,4 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 },{"./ball":"cBxZ","./utils":"UldJ"}],"QCba":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("./src/render"),n=function(){var n=document.getElementById("c");if(n instanceof HTMLCanvasElement){var t=n.getContext("2d");if(null!==t)new e.Render(n,t)}};n();
 },{"./src/render":"ovzr"}]},{},["QCba"], null)
-//# sourceMappingURL=/marching-squares.0a4d411b.js.map
+//# sourceMappingURL=marching-squares.0a4d411b.js.map
