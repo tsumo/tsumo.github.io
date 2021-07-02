@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #1b272d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  color: beige;
+}
+
+.controls input {
+  margin-left: 0.5rem;
+}
+
+canvas {
+  outline: 1px solid grey;
+}
+
+
+/*# sourceMappingURL=/style.e308ff8e.css.map */
