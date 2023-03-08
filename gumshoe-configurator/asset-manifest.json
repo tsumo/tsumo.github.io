@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/gumshoe-configurator/static/css/main.ee703ad2.css",
-    "main.js": "/gumshoe-configurator/static/js/main.3f540f4b.js",
+    "main.css": "/gumshoe-configurator/static/css/main.1dc52988.css",
+    "main.js": "/gumshoe-configurator/static/js/main.566cc8e4.js",
     "static/js/787.f08e8d61.chunk.js": "/gumshoe-configurator/static/js/787.f08e8d61.chunk.js",
     "index.html": "/gumshoe-configurator/index.html",
-    "main.ee703ad2.css.map": "/gumshoe-configurator/static/css/main.ee703ad2.css.map",
-    "main.3f540f4b.js.map": "/gumshoe-configurator/static/js/main.3f540f4b.js.map",
+    "main.1dc52988.css.map": "/gumshoe-configurator/static/css/main.1dc52988.css.map",
+    "main.566cc8e4.js.map": "/gumshoe-configurator/static/js/main.566cc8e4.js.map",
     "787.f08e8d61.chunk.js.map": "/gumshoe-configurator/static/js/787.f08e8d61.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ee703ad2.css",
-    "static/js/main.3f540f4b.js"
+    "static/css/main.1dc52988.css",
+    "static/js/main.566cc8e4.js"
   ]
 }
