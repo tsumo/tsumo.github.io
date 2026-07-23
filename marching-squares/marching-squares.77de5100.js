@@ -125,23 +125,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.v2 = void 0;
 exports.v2 = {
-  scale: function scale(a, n) {
+  scale: function (a, n) {
     return [a[0] * n, a[1] * n];
   },
-  sub: function sub(a, b) {
+  sub: function (a, b) {
     return [a[0] - b[0], a[1] - b[1]];
   },
-  dot: function dot(a, b) {
+  dot: function (a, b) {
     return a[0] * b[0] + a[1] * b[1];
   },
-  reflect: function reflect(a, norm) {
+  reflect: function (a, norm) {
     var d = exports.v2.scale(norm, exports.v2.dot(a, norm));
     return exports.v2.sub(exports.v2.scale(d, 2), a);
   },
-  fromAngle: function fromAngle(n) {
+  fromAngle: function (n) {
     return [Math.cos(n), Math.sin(n)];
   },
-  toAngle: function toAngle(a) {
+  toAngle: function (a) {
     return Math.atan2(a[1], a[0]);
   }
 };
@@ -152,12 +152,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Ball = void 0;
-
 var vector2_1 = require("./vector2");
-
-var Ball =
-/** @class */
-function () {
+var Ball = /** @class */function () {
   function Ball(width, height, x, y, radius, speed, angle) {
     this.width = width;
     this.height = height;
@@ -167,33 +163,26 @@ function () {
     this.y = y;
     this.angle = angle;
   }
-
   Ball.prototype.update = function () {
     var _a = this,
-        x = _a.x,
-        y = _a.y;
-
+      x = _a.x,
+      y = _a.y;
     var dx = Math.cos(this.angle) * this.speed;
     var dy = Math.sin(this.angle) * this.speed;
     var v = vector2_1.v2.fromAngle(this.angle);
     var r = null;
-
     if (y + dy > this.height) {
       r = vector2_1.v2.reflect(v, [1, 0]);
     }
-
     if (y + dy < 0) {
       r = vector2_1.v2.reflect(v, [-1, 0]);
     }
-
     if (x + dx > this.width) {
       r = vector2_1.v2.reflect(v, [0, -1]);
     }
-
     if (x + dx < 0) {
       r = vector2_1.v2.reflect(v, [0, 1]);
     }
-
     if (r !== null) {
       var newAngle = vector2_1.v2.toAngle(r);
       this.angle = newAngle;
@@ -202,10 +191,8 @@ function () {
       this.y += dy;
     }
   };
-
   return Ball;
 }();
-
 exports.Ball = Ball;
 },{"./vector2":"src/vector2.ts"}],"src/utils.ts":[function(require,module,exports) {
 "use strict";
@@ -213,50 +200,42 @@ exports.Ball = Ball;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deg2Rad = exports.randDeviate = exports.randRange = exports.randSign = exports.randInt = exports.rand = void 0;
+exports.invLerp = exports.deg2Rad = exports.randDeviate = exports.randRange = exports.randSign = exports.randInt = exports.rand = void 0;
 var random = Math.random,
-    floor = Math.floor,
-    PI = Math.PI;
-
-var rand = function rand(n) {
+  floor = Math.floor,
+  PI = Math.PI;
+var rand = function (n) {
   if (n === void 0) {
     n = 1;
   }
-
   return random() * n;
 };
-
 exports.rand = rand;
-
-var randInt = function randInt(range) {
-  return floor(exports.rand() * range);
+var randInt = function (range) {
+  return floor((0, exports.rand)() * range);
 };
-
 exports.randInt = randInt;
-
-var randSign = function randSign() {
-  return exports.rand() >= 0.5 ? 1 : -1;
+var randSign = function () {
+  return (0, exports.rand)() >= 0.5 ? 1 : -1;
 };
-
 exports.randSign = randSign;
-
-var randRange = function randRange(from, to) {
-  return exports.rand(to - from) + from;
+var randRange = function (from, to) {
+  return (0, exports.rand)(to - from) + from;
 };
-
 exports.randRange = randRange;
-
-var randDeviate = function randDeviate(n) {
-  return exports.rand(n * 2) - n;
+var randDeviate = function (n) {
+  return (0, exports.rand)(n * 2) - n;
 };
-
 exports.randDeviate = randDeviate;
-
-var deg2Rad = function deg2Rad(d) {
+var deg2Rad = function (d) {
   return d * PI / 180;
 };
-
 exports.deg2Rad = deg2Rad;
+var invLerp = function (a, b, value) {
+  if (a === b) return 0.5;
+  return (value - a) / (b - a);
+};
+exports.invLerp = invLerp;
 },{}],"src/render.ts":[function(require,module,exports) {
 "use strict";
 
@@ -264,11 +243,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Render = void 0;
-
 var ball_1 = require("./ball");
-
 var utils_1 = require("./utils");
-
 var colors = {
   grid: "#263339",
   ball: "salmon",
@@ -300,13 +276,27 @@ var configurationsLUT = {
   14: [lines.leftBottom],
   15: []
 };
-
-var Render =
-/** @class */
-function () {
+var edgesLUT = {
+  0: [],
+  1: [["left", "bottom"]],
+  2: [["right", "bottom"]],
+  3: [["left", "right"]],
+  4: [["right", "top"]],
+  5: [["left", "top"], ["right", "bottom"]],
+  6: [["top", "bottom"]],
+  7: [["left", "top"]],
+  8: [["left", "top"]],
+  9: [["top", "bottom"]],
+  10: [["right", "top"], ["left", "bottom"]],
+  11: [["right", "top"]],
+  12: [["left", "right"]],
+  13: [["right", "bottom"]],
+  14: [["left", "bottom"]],
+  15: []
+};
+var Render = /** @class */function () {
   function Render(canvas, ctx) {
     var _this = this;
-
     this.width = 640;
     this.height = 480;
     this.gridStep = 8;
@@ -325,66 +315,51 @@ function () {
     canvas.height = this.height;
     this.widthCells = Math.ceil(this.width / this.gridStep);
     this.heightCells = Math.ceil(this.height / this.gridStep);
-
     for (var x = 0; x <= this.widthCells; x++) {
       var column = Array(this.heightCells);
       column.fill(0);
       this.influences.push(column);
     }
-
     for (var x = 0; x <= this.widthCells; x++) {
       var column = Array(this.heightCells);
       column.fill(0);
       this.configurations.push(column);
     }
-
     for (var i = 0; i < 10; ++i) {
-      this.balls.push(new ball_1.Ball(this.width, this.height, utils_1.rand(this.width), utils_1.rand(this.height), utils_1.randRange(30, 50), utils_1.randRange(1, 2), utils_1.rand(Math.PI * 2)));
+      this.balls.push(new ball_1.Ball(this.width, this.height, (0, utils_1.rand)(this.width), (0, utils_1.rand)(this.height), (0, utils_1.randRange)(30, 50), (0, utils_1.randRange)(1, 2), (0, utils_1.rand)(Math.PI * 2)));
     }
-
-    var tick = function tick() {
+    var tick = function () {
       _this.clear();
-
       _this.updateBalls();
-
       _this.calcConfigurations();
-
       _this.config.grid && _this.drawGrid();
       _this.config.balls && _this.drawBalls();
       _this.config.metaballs && _this.drawConfigurations();
       requestAnimationFrame(tick);
     };
-
     tick();
   }
-
   Render.prototype.clear = function () {
     this.ctx.clearRect(0, 0, this.width, this.height);
   };
-
   Render.prototype.updateBalls = function () {
     this.balls.forEach(function (ball) {
       return ball.update();
     });
   };
-
   Render.prototype.drawGrid = function () {
     this.ctx.fillStyle = colors.grid;
-
     for (var x = 0; x < this.width; x += this.gridStep) {
       this.ctx.fillRect(x, 0, 1, this.height);
     }
-
     for (var y = 0; y < this.height; y += this.gridStep) {
       this.ctx.fillRect(0, y, this.width, 1);
     }
   };
-
   Render.prototype.calcConfigurations = function () {
     var _this = this;
-
-    var _loop_1 = function _loop_1(x) {
-      var _loop_2 = function _loop_2(y) {
+    var _loop_1 = function (x) {
+      var _loop_2 = function (y) {
         var influence = this_1.balls.reduce(function (prev, curr) {
           var xx = Math.pow(x * _this.gridStep - curr.x, 2);
           var yy = Math.pow(y * _this.gridStep - curr.y, 2);
@@ -392,43 +367,49 @@ function () {
         }, 0);
         this_1.influences[x][y] = influence;
       };
-
       for (var y = 0; y <= this_1.heightCells; y++) {
         _loop_2(y);
       }
     };
-
     var this_1 = this;
-
     for (var x = 0; x <= this.widthCells; x++) {
       _loop_1(x);
     }
-
     for (var i = 0; i < this.widthCells; i++) {
       for (var j = 0; j < this.heightCells; j++) {
         var c = 0;
-
         if (this.influences[i][j] >= 1) {
           c = c | 8;
         }
-
         if (this.influences[i + 1][j] >= 1) {
           c = c | 4;
         }
-
         if (this.influences[i][j + 1] >= 1) {
           c = c | 1;
         }
-
         if (this.influences[i + 1][j + 1] >= 1) {
           c = c | 2;
         }
-
         this.configurations[i][j] = c;
       }
     }
   };
-
+  Render.prototype.edgePoint = function (edge, i, j) {
+    var tl = this.influences[i][j];
+    var tr = this.influences[i + 1][j];
+    var bl = this.influences[i][j + 1];
+    var br = this.influences[i + 1][j + 1];
+    switch (edge) {
+      case "top":
+        return [(0, utils_1.invLerp)(tl, tr, 1), 0];
+      case "bottom":
+        return [(0, utils_1.invLerp)(bl, br, 1), 1];
+      case "left":
+        return [0, (0, utils_1.invLerp)(tl, bl, 1)];
+      case "right":
+        return [1, (0, utils_1.invLerp)(tr, br, 1)];
+    }
+  };
   Render.prototype.drawLine = function (i, j, coefs) {
     var s = this.gridStep;
     var is = i * s;
@@ -438,48 +419,51 @@ function () {
     this.ctx.lineTo(coefs[2] * s + is, coefs[3] * s + js);
     this.ctx.stroke();
   };
-
+  Render.prototype.getSmoothedLines = function (i, j, configuration) {
+    var _this = this;
+    return edgesLUT[configuration].map(function (_a) {
+      var edgeA = _a[0],
+        edgeB = _a[1];
+      var _b = _this.edgePoint(edgeA, i, j),
+        x0 = _b[0],
+        y0 = _b[1];
+      var _c = _this.edgePoint(edgeB, i, j),
+        x1 = _c[0],
+        y1 = _c[1];
+      return [x0, y0, x1, y1];
+    });
+  };
   Render.prototype.drawConfigurations = function () {
     var _this = this;
-
     this.ctx.strokeStyle = colors.influence;
-
-    var _loop_3 = function _loop_3(i) {
-      var _loop_4 = function _loop_4(j) {
+    var _loop_3 = function (i) {
+      var _loop_4 = function (j) {
         var configuration = this_2.configurations[i][j];
-        configurationsLUT[configuration].forEach(function (coefs) {
+        var coefsList = this_2.config.smoothing ? this_2.getSmoothedLines(i, j, configuration) : configurationsLUT[configuration];
+        coefsList.forEach(function (coefs) {
           return _this.drawLine(i, j, coefs);
         });
       };
-
       for (var j = 0; j < this_2.configurations[i].length; j++) {
         _loop_4(j);
       }
     };
-
     var this_2 = this;
-
     for (var i = 0; i < this.configurations.length; i++) {
       _loop_3(i);
     }
   };
-
   Render.prototype.drawBalls = function () {
     var _this = this;
-
     this.ctx.strokeStyle = colors.ball;
     this.balls.forEach(function (ball) {
       _this.ctx.beginPath();
-
       _this.ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-
       _this.ctx.stroke();
     });
   };
-
   return Render;
 }();
-
 exports.Render = Render;
 },{"./ball":"src/ball.ts","./utils":"src/utils.ts"}],"index.ts":[function(require,module,exports) {
 "use strict";
@@ -487,52 +471,40 @@ exports.Render = Render;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
 var render_1 = require("./src/render");
-
-var init = function init() {
+var init = function () {
   var canvas = document.getElementById("c");
-
   if (!(canvas instanceof HTMLCanvasElement)) {
     return;
   }
-
   var ctx = canvas.getContext("2d");
-
   if (ctx === null) {
     return;
   }
-
   var gridCheckbox = document.querySelector('input[name="grid"]');
   var ballsCheckbox = document.querySelector('input[name="balls"]');
   var metaballsCheckbox = document.querySelector('input[name="metaballs"]');
   var smoothingCheckbox = document.querySelector('input[name="smoothing"]');
-
   if (!(gridCheckbox instanceof HTMLInputElement) || !(ballsCheckbox instanceof HTMLInputElement) || !(metaballsCheckbox instanceof HTMLInputElement) || !(smoothingCheckbox instanceof HTMLInputElement)) {
     return;
   }
-
   var render = new render_1.Render(canvas, ctx);
-
-  var onCheckboxClick = function onCheckboxClick() {
+  var onCheckboxClick = function () {
     render.config.grid = gridCheckbox.checked;
     render.config.balls = ballsCheckbox.checked;
     render.config.metaballs = metaballsCheckbox.checked;
     render.config.smoothing = smoothingCheckbox.checked;
   };
-
   gridCheckbox.onclick = onCheckboxClick;
   ballsCheckbox.onclick = onCheckboxClick;
   metaballsCheckbox.onclick = onCheckboxClick;
   smoothingCheckbox.onclick = onCheckboxClick;
 };
-
 init();
 },{"./src/render":"src/render.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
-
 function Module(moduleName) {
   OldModule.call(this, moduleName);
   this.hot = {
@@ -548,37 +520,32 @@ function Module(moduleName) {
   };
   module.bundle.hotData = null;
 }
-
 module.bundle.Module = Module;
 var checkedAssets, assetsToAccept;
 var parent = module.bundle.parent;
-
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53512" + '/');
-
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60272" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
     var data = JSON.parse(event.data);
-
     if (data.type === 'update') {
       var handled = false;
       data.assets.forEach(function (asset) {
         if (!asset.isNew) {
           var didAccept = hmrAcceptCheck(global.parcelRequire, asset.id);
-
           if (didAccept) {
             handled = true;
           }
         }
-      }); // Enable HMR for CSS by default.
+      });
 
+      // Enable HMR for CSS by default.
       handled = handled || data.assets.every(function (asset) {
         return asset.type === 'css' && asset.generated.js;
       });
-
       if (handled) {
         console.clear();
         data.assets.forEach(function (asset) {
@@ -592,20 +559,16 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
         location.reload();
       }
     }
-
     if (data.type === 'reload') {
       ws.close();
-
       ws.onclose = function () {
         location.reload();
       };
     }
-
     if (data.type === 'error-resolved') {
       console.log('[parcel] ✨ Error resolved');
       removeErrorOverlay();
     }
-
     if (data.type === 'error') {
       console.error('[parcel] 🚨  ' + data.error.message + '\n' + data.error.stack);
       removeErrorOverlay();
@@ -614,19 +577,17 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
     }
   };
 }
-
 function removeErrorOverlay() {
   var overlay = document.getElementById(OVERLAY_ID);
-
   if (overlay) {
     overlay.remove();
   }
 }
-
 function createErrorOverlay(data) {
   var overlay = document.createElement('div');
-  overlay.id = OVERLAY_ID; // html encode message and stack trace
+  overlay.id = OVERLAY_ID;
 
+  // html encode message and stack trace
   var message = document.createElement('div');
   var stackTrace = document.createElement('pre');
   message.innerText = data.error.message;
@@ -634,41 +595,31 @@ function createErrorOverlay(data) {
   overlay.innerHTML = '<div style="background: black; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; opacity: 0.85; font-family: Menlo, Consolas, monospace; z-index: 9999;">' + '<span style="background: red; padding: 2px 4px; border-radius: 2px;">ERROR</span>' + '<span style="top: 2px; margin-left: 5px; position: relative;">🚨</span>' + '<div style="font-size: 18px; font-weight: bold; margin-top: 20px;">' + message.innerHTML + '</div>' + '<pre>' + stackTrace.innerHTML + '</pre>' + '</div>';
   return overlay;
 }
-
 function getParents(bundle, id) {
   var modules = bundle.modules;
-
   if (!modules) {
     return [];
   }
-
   var parents = [];
   var k, d, dep;
-
   for (k in modules) {
     for (d in modules[k][1]) {
       dep = modules[k][1][d];
-
       if (dep === id || Array.isArray(dep) && dep[dep.length - 1] === id) {
         parents.push(k);
       }
     }
   }
-
   if (bundle.parent) {
     parents = parents.concat(getParents(bundle.parent, id));
   }
-
   return parents;
 }
-
 function hmrApply(bundle, asset) {
   var modules = bundle.modules;
-
   if (!modules) {
     return;
   }
-
   if (modules[asset.id] || !bundle.parent) {
     var fn = new Function('require', 'module', 'exports', asset.generated.js);
     asset.isNew = !modules[asset.id];
@@ -677,58 +628,45 @@ function hmrApply(bundle, asset) {
     hmrApply(bundle.parent, asset);
   }
 }
-
 function hmrAcceptCheck(bundle, id) {
   var modules = bundle.modules;
-
   if (!modules) {
     return;
   }
-
   if (!modules[id] && bundle.parent) {
     return hmrAcceptCheck(bundle.parent, id);
   }
-
   if (checkedAssets[id]) {
     return;
   }
-
   checkedAssets[id] = true;
   var cached = bundle.cache[id];
   assetsToAccept.push([bundle, id]);
-
   if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
     return true;
   }
-
   return getParents(global.parcelRequire, id).some(function (id) {
     return hmrAcceptCheck(global.parcelRequire, id);
   });
 }
-
 function hmrAcceptRun(bundle, id) {
   var cached = bundle.cache[id];
   bundle.hotData = {};
-
   if (cached) {
     cached.hot.data = bundle.hotData;
   }
-
   if (cached && cached.hot && cached.hot._disposeCallbacks.length) {
     cached.hot._disposeCallbacks.forEach(function (cb) {
       cb(bundle.hotData);
     });
   }
-
   delete bundle.cache[id];
   bundle(id);
   cached = bundle.cache[id];
-
   if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
     cached.hot._acceptCallbacks.forEach(function (cb) {
       cb();
     });
-
     return true;
   }
 }
