@@ -1,5 +1,13 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><title>reviewed/Ars Magica - Definitive Edition (Core Rules).md</title><style>
+  :root {
+    --status-not-started: #999;
+    --status-in-progress: #3b82f6;
+    --status-complete: #0d9488;
+    --status-verified: #16a34a;
+    --status-needs-attention: #dc2626;
+    --status-stale: #d97706;
+  }
   body { font-family: system-ui, sans-serif; margin: 0; padding: 1rem 2rem; }
   .columns { display: grid; grid-template-columns: max-content 1fr 1fr; gap: 0 1.5rem; }
   @media (max-width: 768px) {
@@ -9,17 +17,22 @@
   .columns > :nth-child(6n+2), .columns > :nth-child(6n+3) { background: #fafafa; }
   .columns > .untranslated { background: #fff7e6; }
   .block-index { color: #999; font-size: 0.8rem; text-align: right; margin: 1rem 0; }
+  .status-pill { border: 0; border-radius: 1rem; padding: 0.1rem 0.5rem; min-width: 1.8rem; font: inherit; color: #fff; cursor: pointer; }
+  .status-dialog { position: fixed; position-area: bottom span-right; position-try-fallbacks: flip-block, flip-inline; margin: 0; padding: 0.8rem; border: 1px solid #ccc; border-radius: 0.4rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); }
+  .status-dialog form { display: flex; flex-direction: column; gap: 0.4rem; width: 16rem; }
+  .status-dialog .actions { display: flex; gap: 0.4rem; justify-content: flex-end; }
+  .status-error { color: var(--status-needs-attention); font-size: 0.85rem; margin: 0; }
   h1, h2 { color: #222; }
   ul.index > li { margin-bottom: 0.6rem; }
   .badge { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 1rem; font-size: 0.8rem; color: #fff; }
-  .status-not-started { background: #999; }
-  .status-in-progress { background: #3b82f6; }
-  .status-complete { background: #0d9488; }
-  .status-verified { background: #16a34a; }
-  .status-needs-attention { background: #dc2626; }
-  .status-stale { background: #d97706; }
+  .status-not-started { background: var(--status-not-started); }
+  .status-in-progress { background: var(--status-in-progress); }
+  .status-complete { background: var(--status-complete); }
+  .status-verified { background: var(--status-verified); }
+  .status-needs-attention { background: var(--status-needs-attention); }
+  .status-stale { background: var(--status-stale); }
   .progress { color: #666; font-size: 0.85rem; }
-  ul.flagged { margin: 0.2rem 0 0 1rem; color: #dc2626; font-size: 0.85rem; }
+  ul.flagged { margin: 0.2rem 0 0 1rem; color: var(--status-needs-attention); font-size: 0.85rem; }
   footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; color: #888; font-size: 0.8rem; }
 </style></head>
 <body><p><a href="../../index.html">&larr; all documents</a></p><div class="columns"><div><p class="block-index">0</p></div><div><h1 id="ars-magica-definitive-edition">Ars Magica Definitive Edition</h1></div><div class="untranslated"><h1 id="не-переведено-ars-magica-definitive-edition"><em>(не переведено)</em> Ars Magica Definitive Edition</h1></div><div><p class="block-index">1</p></div><div><p>The extensively revised and expanded deluxe version of Ars Magica 5th Edition.</p></div><div class="untranslated"><p><em>(не переведено)</em> The extensively revised and expanded deluxe version of Ars Magica 5th Edition.</p></div><div><p class="block-index">2</p></div><div><h2 id="markdown-version-specifics">Markdown Version Specifics</h2></div><div class="untranslated"><h2 id="не-переведено-markdown-version-specifics"><em>(не переведено)</em> Markdown Version Specifics</h2></div><div><p class="block-index">3</p></div><div><p>Open License Markdown version by OriginalMadman, <a href="https://github.com/OriginalMadman/Ars-Magica-Open-License">https://github.com/OriginalMadman/Ars-Magica-Open-License</a></p></div><div class="untranslated"><p><em>(не переведено)</em> Open License Markdown version by OriginalMadman,…</p></div><div><p class="block-index">4</p></div><div><p><em>[Completion state: Done. All text and formatting manually fixed and reviewed at length. Definitive Edition is now in excellent readable format including complete TOC/Virtues list/Flaws list/Ability list/Spells Index/Bestiary Index/Traditional Index links. It should be content complete with several fixes (see below). Remaining: Full pass review by others; Minor details such as Stat Blocks and Bestiary and a few more sections have fully corrected text/headings/tables but retains simple formatting that could be improved with br's, italic, bold etc; Character Sheet will likely not be done in markdown (lol)]</em></p></div><div class="untranslated"><p><em>(не переведено)</em> [Completion state: Done. All text and formatting manually fixed and reviewed at…</p></div><div><p class="block-index">5</p></div><div><p><em>For readability in Markdown, the Uppercase headings (originally in a font suitable for that) throughout have been replaced with Chicago Manual of Style Title Case headings (except headings denoting spell LEVEL sections)</em></p></div><div class="untranslated"><p><em>(не переведено)</em> For readability in Markdown, the Uppercase headings (originally in a font…</p></div><div><p class="block-index">6</p></div><div><p><em>Based on the material for Ars Magica, ©1993–2024,  licensed by Trident, Inc. d/b/a Atlas Games®, under <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International license 4.0</a> ("CC-BY-SA 4.0"). Order of Hermes, Tremere, Doissetep, and Grimgroth are trademarks of Paradox Interactive AB and are used with permission.</em></p></div><div class="untranslated"><p><em>(не переведено)</em> Based on the material for Ars Magica, ©1993–2024, licensed by Trident, Inc.…</p></div><div><p class="block-index">7</p></div><div><h3 id="markdown-version-quick-convenience-links">Markdown Version Quick Convenience Links</h3></div><div class="untranslated"><h3 id="не-переведено-markdown-version-quick-convenience-links"><em>(не переведено)</em> Markdown Version Quick Convenience Links</h3></div><div><p class="block-index">8</p></div><div><p><a href="#table-of-contents">Table of Contents</a><br>
